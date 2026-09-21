@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: ceditrack-server
+    name: ceditrack-server2
     env: node
     rootDir: server
     buildCommand: npm install
-    startCommand: node index.js
+    startCommand: node --experimental-sqlite index.js
     envVars:
       - key: NODE_VERSION
         value: 22.12.0
