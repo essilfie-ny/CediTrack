@@ -1,9 +1,13 @@
 import axios from 'axios';
 
-// Dynamically target the host IP address so mobile phones on the same network can access the backend
-const hostname = typeof window !== 'undefined' ? window.location.hostname : 'localhost';
+const configuredBaseUrl = import.meta.env.VITE_API_BASE_URL;
+const fallbackBaseUrl = typeof window !== 'undefined'
+  ? `http://${window.location.hostname}:3001`
+  : 'http://localhost:3001';
+const apiBaseUrl = (configuredBaseUrl || fallbackBaseUrl).replace(/\/$/, '');
+
 const client = axios.create({
-  baseURL: `http://${hostname}:3001/api`,
+  baseURL: `${apiBaseUrl}/api`,
 });
 
 client.interceptors.request.use((config) => {
