@@ -1,18 +1,43 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 import { get, post, put, del } from '../api/client';
 
 const TransactionsPage = () => {
   const { formatAmount, accounts, categories, refreshAccounts } = useContext(AppContext);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialType = searchParams.get('type');
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState(
+    initialType === 'income' || initialType === 'expense' ? initialType : 'all'
+  );
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editingTx, setEditingTx] = useState(null);
   const [showDelete, setShowDelete] = useState(null);
   const [saving, setSaving] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    const typeParam = searchParams.get('type');
+    if (typeParam === 'income' || typeParam === 'expense') {
+      setFilter(typeParam);
+    } else if (!typeParam) {
+      setFilter('all');
+    }
+  }, [searchParams]);
+
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+    const params = new URLSearchParams(searchParams);
+    if (newFilter === 'all') {
+      params.delete('type');
+    } else {
+      params.set('type', newFilter);
+    }
+    setSearchParams(params);
+  };
   
   const [form, setForm] = useState({ 
     type: 'expense', 
@@ -175,7 +200,7 @@ const TransactionsPage = () => {
       <div className="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
         <div className="btn-group">
           {['all', 'income', 'expense'].map(f => (
-            <button key={f} className={`btn btn-sm ${filter === f ? 'btn-primary' : 'btn-light'}`} onClick={() => setFilter(f)}>
+            <button key={f} className={`btn btn-sm ${filter === f ? 'btn-primary' : 'btn-light'}`} onClick={() => handleFilterChange(f)}>
               {f.charAt(0).toUpperCase() + f.slice(1)}
             </button>
           ))}

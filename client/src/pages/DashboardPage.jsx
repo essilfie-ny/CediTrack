@@ -114,30 +114,34 @@ const DashboardPage = () => {
       {/* Summary Cards */}
       <div className="row g-3 mb-4">
         <div className="col-md-4 animate-slide-up stagger-1">
-          <div className="card summary-card p-3 h-100" style={{borderLeft: '4px solid var(--income)'}}>
-            <div className="d-flex justify-content-between align-items-center">
-              <div>
-                <p className="mb-1" style={{fontSize:'0.8rem', color:'var(--text-muted)', fontWeight:600}}>Income</p>
-                <h4 className="text-income fw-800 mb-0" style={{fontSize:'1.35rem'}}>{formatAmount(summary.income)}</h4>
-              </div>
-              <div className="category-icon" style={{background:'var(--income-light)', color:'var(--income)'}}>
-                <i className="bi bi-arrow-down-left"></i>
+          <Link to="/transactions?type=income" className="text-decoration-none text-reset d-block h-100">
+            <div className="card summary-card p-3 h-100" style={{borderLeft: '4px solid var(--income)', cursor: 'pointer'}}>
+              <div className="d-flex justify-content-between align-items-center">
+                <div>
+                  <p className="mb-1" style={{fontSize:'0.8rem', color:'var(--text-muted)', fontWeight:600}}>Income</p>
+                  <h4 className="text-income fw-800 mb-0" style={{fontSize:'1.35rem'}}>{formatAmount(summary.income)}</h4>
+                </div>
+                <div className="category-icon" style={{background:'var(--income-light)', color:'var(--income)'}}>
+                  <i className="bi bi-arrow-down-left"></i>
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
         <div className="col-md-4 animate-slide-up stagger-2">
-          <div className="card summary-card p-3 h-100" style={{borderLeft: '4px solid var(--expense)'}}>
-            <div className="d-flex justify-content-between align-items-center">
-              <div>
-                <p className="mb-1" style={{fontSize:'0.8rem', color:'var(--text-muted)', fontWeight:600}}>Expenses</p>
-                <h4 className="text-expense fw-800 mb-0" style={{fontSize:'1.35rem'}}>{formatAmount(summary.expenses)}</h4>
-              </div>
-              <div className="category-icon" style={{background:'var(--expense-light)', color:'var(--expense)'}}>
-                <i className="bi bi-arrow-up-right"></i>
+          <Link to="/transactions?type=expense" className="text-decoration-none text-reset d-block h-100">
+            <div className="card summary-card p-3 h-100" style={{borderLeft: '4px solid var(--expense)', cursor: 'pointer'}}>
+              <div className="d-flex justify-content-between align-items-center">
+                <div>
+                  <p className="mb-1" style={{fontSize:'0.8rem', color:'var(--text-muted)', fontWeight:600}}>Expenses</p>
+                  <h4 className="text-expense fw-800 mb-0" style={{fontSize:'1.35rem'}}>{formatAmount(summary.expenses)}</h4>
+                </div>
+                <div className="category-icon" style={{background:'var(--expense-light)', color:'var(--expense)'}}>
+                  <i className="bi bi-arrow-up-right"></i>
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
         <div className="col-md-4 animate-slide-up stagger-3">
           <div className="card summary-card p-3 h-100" style={{borderLeft: '4px solid var(--primary)'}}>
@@ -185,8 +189,8 @@ const DashboardPage = () => {
             <h6 className="fw-700 mb-3" style={{fontSize:'0.9375rem'}}>Quick Actions</h6>
             <div className="row g-2">
               {[
-                {icon:'bi-dash-circle', label:'Expense', color:'var(--expense)', bg:'var(--expense-light)', to:'/transactions'},
-                {icon:'bi-plus-circle', label:'Income', color:'var(--income)', bg:'var(--income-light)', to:'/transactions'},
+                {icon:'bi-dash-circle', label:'Expense', color:'var(--expense)', bg:'var(--expense-light)', to:'/transactions?type=expense'},
+                {icon:'bi-plus-circle', label:'Income', color:'var(--income)', bg:'var(--income-light)', to:'/transactions?type=income'},
                 {icon:'bi-arrow-left-right', label:'Transfer', color:'var(--info)', bg:'rgba(59,130,246,0.1)', to:'/accounts'},
                 {icon:'bi-chat-left-text', label:'Import', color:'#7c3aed', bg:'rgba(124,58,237,0.1)', to:'/messages'},
                 {icon:'bi-bullseye', label:'Goals', color:'var(--warning)', bg:'var(--warning-light)', to:'/goals'},
